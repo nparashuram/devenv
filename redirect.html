@@ -15,7 +15,7 @@
   </head>
   <body style="text-align:center">
     <div id="redirect">
-      <h1>Redirecting to ... </h1>
+      <h1>Redirecting in 5 seconds to ... </h1>
       <h2><span id="destination"></span></h2>
       <hr />
     </div>
@@ -28,7 +28,9 @@
         document.getElementById("redirect").style.display = "none";
       } else {
         document.getElementById("destination").innerText = redirect + window.location.search
-        //window.location.href = redirect + window.location.search; 
+        window.setTimeout(function() {
+          window.location.href = redirect + window.location.search; 
+        }, 5000)
       }
       document.getElementById("set_redirect").addEventListener("click", function() {
         redirect = window.prompt("Redirect URL", redirect)
