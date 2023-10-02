@@ -15,30 +15,43 @@
   </head>
   <body style="text-align:center">
     <div id="redirect">
-      <h1>Redirecting in 5 seconds to ... </h1>
-      <h2><span id="destination"></span></h2>
-      <hr />
-    </div>
-    <div>
-      <button id="set_redirect">Set Redirect URL</button>
-    </div>
-    <script type="text/javascript">
-      var redirect = window.localStorage['redirect_page']
-      if (typeof redirect === "undefined") {
-        document.getElementById("redirect").style.display = "none";
-      } else {
-        document.getElementById("destination").innerText = redirect + window.location.search
-        window.setTimeout(function() {
-          window.location.href = redirect + window.location.search; 
-        }, 5000)
-      }
-      document.getElementById("set_redirect").addEventListener("click", function() {
-        redirect = window.prompt("Redirect URL", redirect)
-        if (redirect) {
-          window.localStorage['redirect_page'] = redirect
-          window.location.refresh()
+    <h1 id="timer">Redirecting in 5 ... </h1>
+    <h2><span id="destination"></span></h2>
+    <hr />
+  </div>
+  <div>
+    <button id="set_redirect">Set Redirect URL</button>
+    <button id="cancel_timer">Cancel Redirect</button>
+  </div>
+  <script type="text/javascript">
+    var redirect = window.localStorage['redirect_page'];
+    var time = 5;
+    var timerEl = document.getElementById("timer");
+    var timer = null;
+    if (typeof redirect === "undefined") {
+      document.getElementById("redirect").style.display = "none";
+    } else {
+      document.getElementById("destination").innerText = redirect + window.location.search
+      var timer = window.setInterval(function() {
+        timerEl.innerText = "Redirecting in " + time--;
+        if (time < 0) {
+          window.clearInterval(timer);
+          console.log("Redirecting")
+          //window.location.href = redirect + window.location.search; 
         }
-      })
-    </script>
+      }, 1000)
+    }
+    document.getElementById("cancel_timer").addEventListener("click", function() {
+      timerEl.innerText = "Redirect cancelled";
+      window.clearInterval(timer);
+    });
+    document.getElementById("set_redirect").addEventListener("click", function() {
+      redirect = window.prompt("Redirect URL", redirect)
+      if (redirect) {
+        window.localStorage['redirect_page'] = redirect
+        window.location.reload()
+      }
+    });
+  </script>
   </body>
 </html>
