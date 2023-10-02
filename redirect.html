@@ -1,0 +1,42 @@
+<!DOCTYPE HTML> 
+<html>
+  <head> 
+    <meta charset="utf-8"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="Parashuram">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <meta name="MSSmartTagsPreventParsing" content="true"> 
+    <meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="apple-touch-icon" href="https://nparashuram.com/favicon.ico"> 
+    <link rel="image/vnd.microsoft.icon" rel="icon" href="https://nparashuram.com/favicon.ico"> 
+    <meta name="theme-color" content="#fff"> 
+    <link rel="icon" sizes="369x369" href="http://blog.nparashuram.com/me.png"> 
+    <title>Redirecting ... </title>
+  </head>
+  <body style="text-align:center">
+    <div id="redirect">
+      <h1>Redirecting to ... </h1>
+      <h2><span id="destination"></span></h2>
+      <hr />
+    </div>
+    <div>
+      <button id="set_redirect">Set Redirect URL</button>
+    </div>
+    <script type="text/javascript">
+      var redirect = window.localStorage['redirect_page']
+      if (typeof redirect === "undefined") {
+        document.getElementById("redirect").style.display = "none";
+      } else {
+        document.getElementById("destination").innerText = redirect + window.location.search
+        //window.location.href = redirect + window.location.search; 
+      }
+      document.getElementById("set_redirect").addEventListener("click", function() {
+        redirect = window.prompt("Redirect URL", redirect)
+        if (redirect) {
+          window.localStorage['redirect_page'] = redirect
+          window.location.refresh()
+        }
+      })
+    </script>
+  </body>
+</html>
